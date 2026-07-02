@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.idea/
+.env
+*.json.local
+
+# Cache files (user-specific, never commit)
+.mcp-cache/
+~/.sql-server-mcp.json
