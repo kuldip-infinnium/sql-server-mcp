@@ -61,14 +61,14 @@ flowchart LR
     end
 
     subgraph Server["sql-server-mcp (FastMCP · stdio)"]
-        T["Tools\nquery · schema · procedures · overview"]
-        P["Prompts\nexplore · explain · audit · write-query"]
-        C["Schema Cache\n~/.mcp-cache/&lt;db&gt;/schema.json"]
-        A["Analyzer\n(reads INFORMATION_SCHEMA + sys.*)"]
-        G["Query Guard\n(blocks writes)"]
+        T["Tools<br/>query · schema · procedures · overview"]
+        P["Prompts<br/>explore · explain · audit · write-query"]
+        C["Schema Cache<br/>~/.mcp-cache/db/schema.json"]
+        A["Analyzer<br/>reads INFORMATION_SCHEMA + sys.*"]
+        G["Query Guard<br/>blocks writes"]
     end
 
-    DB[("Microsoft\nSQL Server")]
+    DB[("Microsoft<br/>SQL Server")]
 
     U <-->|MCP protocol| T
     U <-->|MCP protocol| P
@@ -111,17 +111,17 @@ sequenceDiagram
     participant Cache
     participant DB as SQL Server
 
-    You->>Claude: "What references the Customers table?"
-    Claude->>MCP: get_table_relationships("Customers")
+    You->>Claude: What references the Customers table?
+    Claude->>MCP: get_table_relationships(Customers)
     MCP->>Cache: load schema
     alt cache valid
-        Cache-->>MCP: schema (tables + FKs)
-    else stale / missing
+        Cache-->>MCP: schema tables + FKs
+    else stale or missing
         MCP->>DB: analyse schema
         DB-->>MCP: metadata
         MCP->>Cache: save
     end
-    MCP-->>Claude: outgoing + incoming FKs (JSON)
+    MCP-->>Claude: outgoing + incoming FKs
     Claude-->>You: plain-English answer
 ```
 
